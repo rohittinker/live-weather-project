@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 API_KEY = "ce5f1d665c4571fb02717b6b4a1d9068"
 cities = {
     "Jaipur": {"lat": 26.91, "lon": 75.78},
@@ -20,3 +21,5 @@ password = os.getenv("DB_PASSWORD")
 host = os.getenv("DB_HOST")
 port = os.getenv("DB_PORT")
 database = os.getenv ("DB_NAME")
+
+port = os.getenv("DB_PORT", "4000")
