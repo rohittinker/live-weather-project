@@ -1,0 +1,35 @@
+name: Weather ETL Automated Pipeline
+
+on:
+    schedule:
+        - cron: '0 * * * *'
+    workflow_dispatch:
+
+jobs:
+    run-etl-pipeline:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository Code
+              uses: actions/checkout@v4
+
+            - name: Setup Python Environment
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.10'
+
+            - name: Install Dependencies
+              run: |
+                python -m pip install --upgrade pip
+                pip install pandas sqlalchemy pymysql requests python-dotenv
+
+            - name: Execute ETL Script
+              env:
+                DB_USER: ${{ secrets.DB_USER }}
+                DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+                DB_HOST: ${{ secrets.DB_HOST }}
+                DB_PORT: ${{ secrets.DB_PORT }}
+                DB_NAME: ${{ secrets.DB_NAME }}
+              run: python main.py
+
+
